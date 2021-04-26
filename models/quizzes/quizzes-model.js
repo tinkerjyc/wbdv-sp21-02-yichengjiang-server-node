@@ -1,6 +1,9 @@
-const quizzesSchema = require("./quizzes-schema")
 const mongoose = require("mongoose")
-const quizzesModel = mongoose
-    .model("QuizModel", quizzesSchema)
+const quizzesSchema = require("./quizzes-schema")
+
+const quizzesModel = mongoose.model(
+    "QuizzesModel",
+    quizzesSchema
+)
 
 module.exports = quizzesModel

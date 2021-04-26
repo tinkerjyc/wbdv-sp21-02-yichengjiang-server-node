@@ -1,9 +1,20 @@
 const quizAttemptDao = require('../daos/quiz-attempts-dao')
+
 module.exports = (app) => {
-    app.post('/api/quizzes/:qid/attempts', (req, res) =>
-        quizAttemptDao.createAttempt( req.params.qid, req.body)
-            .then(attempt => res.send(attempt)))
-    app.get('/api/quizzes/:qid/attempts', (req, res) =>
-        quizAttemptDao.findAttemptsForQuiz(req.params.qid)
-            .then(attempts => res.send(attempts)))
+    const createAttempt = (req, res) => {
+        const qid = req.params['qid']
+        const attempt = req.body
+        quizAttemptDao.createAttempt(qid, attempt)
+            .then(attempt => res.send(attempt))
+    }
+
+
+    const findAttemptsForQuiz = (req, res) => {
+        const quizId = req.params['qid']
+        quizAttemptDao.findAttemptsForQuiz(quizId)
+            .then(attempts => res.send(attempts))
+    }
+
+    app.post('/api/quizzes/:qid/attempts', createAttempt)
+    app.get('/api/quizzes/:qid/attempts', findAttemptsForQuiz)
 }
